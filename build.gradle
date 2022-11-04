@@ -23,6 +23,17 @@ ext {
 
 configure(allprojects) { project ->
 	repositories {
+		maven {
+		 	allowInsecureProtocol = true
+			url "http://maven.aliyun.com/nexus/content/groups/public/"
+		}
+		maven{
+		 	allowInsecureProtocol = true
+		 	url "http://maven.aliyun.com/nexus/content/repositories/jcenter"
+		}
+		maven {
+		 	url "https://repo.spring.io/libs-release"
+		}
 		mavenCentral()
 		maven { url "https://repo.spring.io/libs-spring-framework-build" }
 		if (version.contains('-')) {
@@ -98,11 +109,11 @@ configure([rootProject] + javaProjects) { project ->
 	}
 
 	tasks.named("checkstyleMain").configure {
-		maxHeapSize = "1g"
+		// maxHeapSize = "1g"
 	}
 
 	tasks.named("checkstyleTest").configure {
-		maxHeapSize = "1g"
+		// maxHeapSize = "1g"
 	}
 
 	dependencies {
@@ -145,7 +156,8 @@ configure([rootProject] + javaProjects) { project ->
 			// TODO Uncomment link to JUnit 5 docs once we have sorted out
 			// the following warning in the build.
 			//
-			// warning: The code being documented uses packages in the unnamed module, but the packages defined in https://junit.org/junit5/docs/5.9.1/api/ are in named modules.
+			// warning: The code being documented uses packages in the unnamed module, but the packages defined in
+			// https://junit.org/junit5/docs/5.9.1/api/ are in named modules.
 			//
 			// "https://junit.org/junit5/docs/5.9.1/api/",
 			"https://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/",
@@ -189,7 +201,7 @@ configure(rootProject) {
 	}
 
 	tasks.named("checkstyleNohttp").configure {
-		maxHeapSize = "1g"
+		// maxHeapSize = "1g"
 	}
 
 	publishing {
