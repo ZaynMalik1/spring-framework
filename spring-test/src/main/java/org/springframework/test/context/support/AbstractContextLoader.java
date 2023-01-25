@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2022 the original author or authors.
+ * Copyright 2002-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,9 +49,9 @@ import org.springframework.util.ResourceUtils;
  * <em>Template Method</em> based approach for {@link #processLocations processing}
  * resource locations.
  *
- * <p>As of Spring 3.1, {@code AbstractContextLoader} also provides a basis
- * for all concrete implementations of the {@link SmartContextLoader} SPI. For
- * backwards compatibility with the {@code ContextLoader} SPI,
+ * <p>{@code AbstractContextLoader} also provides a basis for all concrete implementations
+ * of the {@link SmartContextLoader} SPI. For backwards compatibility with the
+ * {@code ContextLoader} SPI,
  * {@link #processContextConfiguration(ContextConfigurationAttributes)} delegates
  * to {@link #processLocations(Class, String...)}.
  *
@@ -233,11 +233,11 @@ public abstract class AbstractContextLoader implements SmartContextLoader {
 	 * is the value of the first configured
 	 * {@linkplain #getResourceSuffixes() resource suffix} for which the
 	 * generated location actually exists in the classpath.
-	 * <p>As of Spring 3.1, the implementation of this method adheres to the
-	 * contract defined in the {@link SmartContextLoader} SPI. Specifically,
-	 * this method will <em>preemptively</em> verify that the generated default
-	 * location actually exists. If it does not exist, this method will log a
-	 * warning and return an empty array.
+	 * <p>The implementation of this method adheres to the contract defined in the
+	 * {@link SmartContextLoader} SPI. Specifically, this method will
+	 * <em>preemptively</em> verify that the generated default location actually
+	 * exists. If it does not exist, this method will log a warning and return an
+	 * empty array.
 	 * <p>Subclasses can override this method to implement a different
 	 * <em>default location generation</em> strategy.
 	 * @param clazz the class for which the default locations are to be generated
@@ -255,20 +255,20 @@ public abstract class AbstractContextLoader implements SmartContextLoader {
 			ClassPathResource classPathResource = new ClassPathResource(resourcePath);
 			if (classPathResource.exists()) {
 				String prefixedResourcePath = ResourceUtils.CLASSPATH_URL_PREFIX + SLASH + resourcePath;
-				if (logger.isInfoEnabled()) {
-					logger.info(String.format("Detected default resource location \"%s\" for test class [%s]",
+				if (logger.isDebugEnabled()) {
+					logger.debug(String.format("Detected default resource location \"%s\" for test class [%s]",
 							prefixedResourcePath, clazz.getName()));
 				}
 				return new String[] {prefixedResourcePath};
 			}
-			else if (logger.isDebugEnabled()) {
-				logger.debug(String.format("Did not detect default resource location for test class [%s]: " +
+			else if (logger.isTraceEnabled()) {
+				logger.trace(String.format("Did not detect default resource location for test class [%s]: " +
 						"%s does not exist", clazz.getName(), classPathResource));
 			}
 		}
 
-		if (logger.isInfoEnabled()) {
-			logger.info(String.format("Could not detect default resource locations for test class [%s]: " +
+		if (logger.isDebugEnabled()) {
+			logger.debug(String.format("Could not detect default resource locations for test class [%s]: " +
 					"no resource found for suffixes %s.", clazz.getName(), ObjectUtils.nullSafeToString(suffixes)));
 		}
 
@@ -294,13 +294,13 @@ public abstract class AbstractContextLoader implements SmartContextLoader {
 	 * Determine whether <em>default</em> resource locations should be
 	 * generated if the {@code locations} provided to
 	 * {@link #processLocations(Class, String...)} are {@code null} or empty.
-	 * <p>As of Spring 3.1, the semantics of this method have been overloaded
-	 * to include detection of either default resource locations or default
-	 * configuration classes. Consequently, this method can also be used to
-	 * determine whether <em>default</em> configuration classes should be
-	 * detected if the {@code classes} present in the
-	 * {@link ContextConfigurationAttributes configuration attributes} supplied
-	 * to {@link #processContextConfiguration(ContextConfigurationAttributes)}
+	 * <p>The semantics of this method have been overloaded to include detection
+	 * of either default resource locations or default configuration classes.
+	 * Consequently, this method can also be used to determine whether
+	 * <em>default</em> configuration classes should be detected if the
+	 * {@code classes} present in the {@linkplain ContextConfigurationAttributes
+	 * configuration attributes} supplied to
+	 * {@link #processContextConfiguration(ContextConfigurationAttributes)}
 	 * are {@code null} or empty.
 	 * <p>Can be overridden by subclasses to change the default behavior.
 	 * @return always {@code true} by default

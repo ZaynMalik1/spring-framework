@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2022 the original author or authors.
+ * Copyright 2002-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,7 +95,7 @@ class DefaultClientRequestObservationConventionTests {
 	@Test
 	void addsKeyValueForNonResolvableStatus() throws Exception {
 		ClientRequestObservationContext context = new ClientRequestObservationContext(this.request);
-		ClientHttpResponse response = mock(ClientHttpResponse.class);
+		ClientHttpResponse response = mock();
 		context.setResponse(response);
 		given(response.getStatusCode()).willThrow(new IOException("test error"));
 		assertThat(this.observationConvention.getLowCardinalityKeyValues(context)).contains(KeyValue.of("status", "IO_ERROR"));
